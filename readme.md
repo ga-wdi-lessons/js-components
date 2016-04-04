@@ -72,12 +72,48 @@ include two differnt instances of the component with different messages.
 
 [Starter Code](https://github.com/ga-wdi-exercises/simple_component)
 
-## jQuery find / closest
+## jQuery `find` / `closest`
 
 Take a few minutes to read the jQuery docs on `find` and `closest`. How do you
-think these methods will help us build components?
+think these methods will help us build components? (`find` in particular is important.)
 
-## Exercise - Cash Register w/ Components
+## `.bind`
+
+So far, we've dealt with broken context in event listeners by using a technique
+like `var self = this;`. It turns out there are cases where that's not so
+useful.
+
+The most common case where `self` doesn't work is when our callback function
+isn't an inline anonymous function. If instead, the function is a named function
+that we reference, `self` won't be in scope in the named function.
+
+The solution here is to `bind` the function. `bind` sets the value of this to be
+whatever we specify, no matter where it's executed. Here's an example of what
+that might look like:
+
+```js
+form.on("submit", this.addRegisterEntry.bind(this));
+```
+
+It may be confusing to read, but the basic idea is, take whatever the current
+value of `this` is (in our case, it should be the component object), and lock it
+in so that when the `addRegisterEntry` method is called, `this` *still* means
+the component object, and *not* the global window object.
+
+### Mini Exercise - using `.bind` & `.find`
+
+Checkout the `starter-jquery-find` branch of the simple component demo.
+
+[Starter](https://github.com/ga-wdi-exercises/simple_component/tree/starter-jquery-find)
+
+Notice how it's broken in 2 ways:
+
+1. Multiple components seem to show the same data.
+2. The alert button is broken.
+
+Fix both of these issues! (Note you *only* need to edit the `render` function's code).
+
+## Main Exercise - Cash Register w/ Components
 
 We'll spend the rest of the afternoon converting our cash register code to use
 a component-based approach.
